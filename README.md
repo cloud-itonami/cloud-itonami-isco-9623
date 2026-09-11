@@ -23,7 +23,7 @@ human-in-the-loop interrupt) +-> :hold (:hard?)`. HARD invariants
 no-actuation (`:effect` must be `:propose`), a closed op-allowlist
 (`:log-work-record`, `:schedule-crew-operation`,
 `:flag-safety-concern`, `:coordinate-supply-order` — nothing else may
-ever be proposed). 24 tests / 52 assertions green (`clojure -M:test`).
+ever be proposed). 24 tests / 52 assertions green (`kbb -M:test`).
 There is a permanent, unconditional block on any
 proposal that would directly finalize a cash-collection/
 reconciliation-execution decision (e.g. approving a specific cash
