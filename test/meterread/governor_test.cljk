@@ -1,5 +1,5 @@
 (ns meterread.governor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [meterread.store :as store]
             [meterread.advisor :as advisor]
             [meterread.governor :as governor]))

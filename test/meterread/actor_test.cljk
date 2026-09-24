@@ -1,5 +1,5 @@
 (ns meterread.actor-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [meterread.actor :as actor]
             [meterread.store :as store]))
 
