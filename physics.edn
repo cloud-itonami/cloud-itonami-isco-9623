@@ -1,0 +1,33 @@
+;; What this vertical's robot physically does, declared for
+;; kotoba.robotics.process (kotoba-lang/robotics). `kbb -M:physics` runs it.
+;;
+;; README "Robotics premise": a route scheduling/logistics robot serves a
+;; meter-reading and vending-machine collection crew (ISCO 9623). Its physical
+;; work is the collection route itself: pulling the coin cassette out of a
+;; vending machine and wheeling the collected coin bags along the route to the
+;; service van.
+;;
+;; Every number without a cited source is marked `estimate` in its :basis.
+;; Replacing an estimate with a sourced value is this bot's growth work.
+{:physics/schema "itonami.physical-ai.spec.v1"
+ :repo "cloud-itonami/cloud-itonami-isco-9623"
+ :cases
+ [{:id :coin-cassette-out-of-vending-machine
+   :kind :manipulator
+   :procedure "arm pulls a full coin cassette out of the vending machine's coin mech bay and lifts it into the collection tote on the cart"
+   :params {:l1-m 0.45 :l2-m 0.40 :m1-kg 3.5 :m2-kg 2.5
+            :from [0.60 0.30] :to [0.35 0.75] :duration-s 2.0 :steps 400}
+   :sweep {:param :payload-kg :values [2.0 4.0 6.0 8.0 10.0]}
+   :quantity :peak-tau1-nm
+   :limit {:max 60.0 :basis "estimate: continuous shoulder torque of a light collaborative arm (~5 kg class)"}
+   :boundary {:lo 0.5 :hi 30.0}}
+  {:id :coin-bags-to-service-van
+   :kind :transport
+   :procedure "collection cart wheels the route's coin bags from the last vending machine along the sidewalk to the service van"
+   :params {:mass-kg 40.0 :distance-m 80.0 :v-max-mps 1.2 :a-max-mps2 0.5
+            :brake-decel-mps2 0.8 :drive-force-n 120.0 :crr 0.02
+            :cog-height-m 0.50 :support-half-length-m 0.25 :max-time-s 1800.0}
+   :sweep {:param :payload-kg :values [20.0 60.0 120.0 180.0 240.0]}
+   :quantity :cycle-time-s
+   :limit {:max 90.0 :basis "estimate: one sidewalk leg inside a 2-minute per-stop budget of a collection route"}
+   :boundary {:lo 10.0 :hi 600.0}}]}
